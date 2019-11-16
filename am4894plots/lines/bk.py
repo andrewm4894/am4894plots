@@ -1,18 +1,3 @@
-#%%
-import pandas as pd
-import numpy as np
-from am4894pd.utils import df_dummy_ts
-import bokeh
-from bokeh.models import ColumnDataSource, HoverTool
-from bokeh.plotting import figure, show, output_file
-from bokeh.palettes import Category20
-
-#%%
-
-df = df_dummy_ts(n_cols=3)
-print(df.shape)
-
-#%%
 
 
 def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300, w: int = 1200,
@@ -39,13 +24,3 @@ def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300,
         hover.formatters = {"time": "datetime"}
     output_file(out_path)
     show(p)
-
-
-#%%
-
-plot_lines(df)
-
-
-#%%
-
-print(df)
