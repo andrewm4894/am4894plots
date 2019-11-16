@@ -1,5 +1,6 @@
 -r requirements.txt
 
+am4894pd==0.1.2
 pip==19.3.1
 bump2version==0.5.11
 wheel==0.33.6
@@ -11,6 +12,7 @@ Sphinx==1.8.5
 twine==1.14.0
 sphinx-rtd-theme==0.4.3
 jupyter==1.0.0
+numpy==1.17.4
 
 pytest==4.6.5
 pytest-runner==5.1
