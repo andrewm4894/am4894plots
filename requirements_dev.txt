@@ -1,6 +1,6 @@
 -r requirements.txt
 
-am4894pd==0.1.3
+am4894pd==0.1.4
 pip==19.3.1
 bump2version==0.5.11
 wheel==0.33.6

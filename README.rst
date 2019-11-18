@@ -30,7 +30,16 @@ My plotting package!
 Features
 --------
 
-* TODO
+* Some common plots using Bokeh.
+
+TODO
+--------
+
+* Add ability to output to notbook as opposed to html file.
+* Add more tests.
+* Heatmaps!
+* Animation and time based playback of a plot.
+* Other stuff :)
 
 Credits
 -------
