@@ -100,3 +100,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# tmp dir
+/tmp/
+
+# ignore what look like plot files from git
+plot.html
+test_plot.html
