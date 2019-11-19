@@ -1,5 +1,6 @@
 -r requirements.txt
 
+matplotlib==3.1.1
 am4894pd==0.1.4
 pip==19.3.1
 bump2version==0.5.11
@@ -9,10 +10,13 @@ flake8==3.7.9
 tox==3.14.1
 coverage==4.5.4
 Sphinx==2.2.1
-twine==2.0.0
+twine==3.0.0
 sphinx-rtd-theme==0.4.3
 jupyter==1.0.0
 numpy==1.17.4
+seaborn==0.9.0
+ffmpeg-python==0.2.0
+celluloid==0.2.0
 
 pytest==5.2.4
 pytest-runner==5.2
