@@ -1,5 +1,5 @@
 import pandas as pd
-from bokeh.io import curdoc
+from bokeh.io import curdoc, output_notebook
 from bokeh.layouts import gridplot
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import figure, show, output_file
@@ -26,7 +26,7 @@ def add_hover(p, cols: list = None, x_col: str = 'time'):
 def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300, w: int = 1200,
                t_str: str = 'box_zoom,pan,hover,reset,save', x_type: str = 'datetime', show_p: bool = True,
                t_loc: str = 'right', out_path: str = "plot.html", return_p: bool = False, palette: str = 'Category20',
-               p_theme: str = 'light_minimal'):
+               p_theme: str = 'light_minimal', notebook: bool = False):
     """Plot lines.
     """
     # get cols to plot
@@ -46,8 +46,11 @@ def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300,
     for i, col in enumerate(cols):
         p.line(x, col, source=source, name=col, color=p_palette[i])
         add_hover(p, cols)
-    output_file(out_path)
+    if out_path:
+        output_file(out_path)
     curdoc().theme = p_theme
+    if notebook:
+        output_notebook()
     if show_p:
         show(p)
     if return_p:
@@ -56,8 +59,9 @@ def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300,
 
 def plot_lines_grid(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300, w: int = 1200,
                     t_str: str = 'box_zoom,pan,hover,reset,save', x_type: str = 'datetime', show_p: bool = True,
-                    t_loc: str = 'right', out_path: str = "plot.html", return_p: bool = False,
-                    share_x: bool = True, share_y: bool = False, palette: str = 'Category20', p_theme: str = 'light_minimal'):
+                    t_loc: str = 'right', out_path: str = "plot.html", return_p: bool = False, notebook: bool = False,
+                    share_x: bool = True, share_y: bool = False, palette: str = 'Category20',
+                    p_theme: str = 'light_minimal'):
     """Plot lines grid.
     """
     # get cols to plot
@@ -94,8 +98,11 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, x: str = None, h: int =
             add_hover(p, cols)
             grid_list.append([p])
     p = gridplot(grid_list, toolbar_location=t_loc)
-    output_file(out_path)
+    if out_path:
+        output_file(out_path)
     curdoc().theme = p_theme
+    if notebook:
+        output_notebook()
     if show_p:
         show(p)
     if return_p:
