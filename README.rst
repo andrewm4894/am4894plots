@@ -26,6 +26,10 @@ My plotting package!
 * Free software: MIT license
 * Documentation: https://am4894plots.readthedocs.io.
 
+Quickstart
+----------
+
+* `Google Colab Starter Notebook`_ with typical examples.
 
 Features
 --------
@@ -35,7 +39,6 @@ Features
 TODO
 --------
 
-* Add ability to output to notbook as opposed to html file.
 * Add more tests.
 * Heatmaps!
 * Animation and time based playback of a plot.
@@ -48,3 +51,5 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`Google Colab Starter Notebook`: https://colab.research.google.com/drive/1Agj0qlgvShrTNLKDGRFJTPiLoBgww03I
+
