@@ -10,7 +10,7 @@ def test_plot_lines():
     assert str(type(p)) == "<class 'plotly.graph_objs._figure.Figure'>"
     assert len(p.data) == 2
     assert [p.data[c].name for c in range(len(p.data))] == ['col0', 'col1']
-    assert [len(p.data[c].x) for c in range(len(p.data))] == [1441, 1441]
+    assert [len(p.data[c].x) for c in range(len(p.data))] == [1342, 1342]
 
 
 def test_plot_lines_grid():
@@ -19,7 +19,7 @@ def test_plot_lines_grid():
     assert len(p.data) == 2
     assert [p.data[c].name for c in range(len(p.data))] == ['col0', 'col1']
     assert [p.data[c].xaxis for c in range(len(p.data))] == ['x', 'x2']
-    assert [len(p.data[c].x) for c in range(len(p.data))] == [1441, 1441]
+    assert [len(p.data[c].x) for c in range(len(p.data))] == [1342, 1342]
 
 
 
