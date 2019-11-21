@@ -101,5 +101,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-# include all tests
+# include all dist i.e. distribution (in the match sense as opposed to packaging) related stuff
 !tests/dist/
+!am4894plots/dist/
