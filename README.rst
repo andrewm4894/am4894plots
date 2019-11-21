@@ -28,7 +28,7 @@ So instead anytime i have a new type of plot i need to do that could be useful a
 
 This was also a good excuse for me to learn a bit about developing python packages and pushing them to pypi.
 
-Use at you own peril! Feel free to open issues and all that stuff.
+Use at you own peril! Feel free to open issues and all that good stuff.
 
 * Free software: MIT license
 * Documentation: https://am4894plots.readthedocs.io.
