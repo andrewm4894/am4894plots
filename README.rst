@@ -28,10 +28,13 @@ So instead anytime i have a new type of plot i need to do that could be useful a
 
 This was also a good excuse for me to learn a bit about developing python packages and pushing them to pypi.
 
-Use at you own peril!
+Use at you own peril! Feel free to open issues and all that stuff.
 
 * Free software: MIT license
 * Documentation: https://am4894plots.readthedocs.io.
+* Github: https://github.com/andrewm4894/am4894plots
+* pypi: https://pypi.org/project/am4894plots/
+* Travis CI: https://travis-ci.org/andrewm4894/am4894plots
 * About me: https://andrewm4894.com/
 
 Quickstart
@@ -50,7 +53,7 @@ TODO
 
 * Keep adding tests.
 * Heatmaps!
-* Animation and time based playback of a plot.
+* Animation and time based playback of a timeseries.
 * Other things as they come up.
 * World domination.
 * Mindfulness (i have multiple apps but keep procrastinating).
