@@ -13,7 +13,6 @@ am4894plots
         :target: https://am4894plots.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-
 .. image:: https://pyup.io/repos/github/andrewm4894/am4894plots/shield.svg
      :target: https://pyup.io/repos/github/andrewm4894/am4894plots/
      :alt: Updates
