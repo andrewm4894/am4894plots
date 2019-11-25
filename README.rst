@@ -45,7 +45,7 @@ Quickstart
 Features
 --------
 
-* Meh - see examples or colab notebook.
+* Meh - see `examples`_ or colab notebook.
 
 TODO
 --------
