@@ -51,7 +51,6 @@ TODO
 --------
 
 * Keep adding tests.
-* Heatmaps!
 * Animation and time based playback of a timeseries.
 * Other things as they come up.
 * World domination.
