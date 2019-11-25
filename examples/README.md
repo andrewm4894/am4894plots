@@ -8,5 +8,6 @@ __Note__: These notebooks are probably best viewed via [nbviewer](https://nbview
 - [lines.ipynb](https://nbviewer.jupyter.org/github/andrewm4894/am4894plots/blob/master/examples/lines.ipynb)
 - [dists.ipynb](https://nbviewer.jupyter.org/github/andrewm4894/am4894plots/blob/master/examples/dists.ipynb)
 - [scatters.ipynb](https://nbviewer.jupyter.org/github/andrewm4894/am4894plots/blob/master/examples/scatters.ipynb)
+- [heatmap.ipynb](https://nbviewer.jupyter.org/github/andrewm4894/am4894plots/blob/master/examples/heatmap.ipynb)
 
 
