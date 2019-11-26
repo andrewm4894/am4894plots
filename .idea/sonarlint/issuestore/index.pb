@@ -65,3 +65,13 @@ J
 tests/scatters/__init__.py,8\9\89de9e45f6805742ca015a5a365c481e9dceabaa
 M
 tests/scatters/test_plotly.py,e\4\e4b6d02e5f0fdb684f737be5edc5d68a577a1d8a
+O
+am4894plots/heatmap/__init__.py,6\d\6d68aa7d3e5011c20860a4ffc5870749ed31c43b
+M
+am4894plots/heatmap/plotly.py,8\2\8256b0e060c4b8cf305c8cfdc66d05c53550ae47
+I
+tests/heatmap/__init__.py,b\7\b76317215eaf0b710c32d913aa12c43a79a903b3
+L
+tests/heatmap/test_plotly.py,2\9\290119d7393fe636454bd92aa46c5ddae181e2be
+F
+examples/heatmap.ipynb,2\d\2d7b9ac87f824cb3e5d42c7770483a7fb1744656
