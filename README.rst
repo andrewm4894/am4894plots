@@ -17,6 +17,10 @@ am4894plots
      :target: https://pyup.io/repos/github/andrewm4894/am4894plots/
      :alt: Updates
 
+.. image:: https://codecov.io/gh/andrewm4894/am4894plots/branch/master/graph/badge.svg
+     :target: https://codecov.io/gh/andrewm4894/am4894plots
+     :alt: Codecov
+
 
 
 My plotting package! I got fed up spending half a day or more each time i wanted to do some new plots or charts in python.
