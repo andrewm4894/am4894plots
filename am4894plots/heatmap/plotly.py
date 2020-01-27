@@ -1,15 +1,20 @@
 import pandas as pd
 import plotly
 import plotly.graph_objects as go
+from ndpd.utils import get_cols_like
 
 
-def plot_heatmap(df: pd.DataFrame, cols: list = None, id_vars: list = None, out_path: str = None, show_p: bool = True,
-                 return_p: bool = False, h: int = None, w: int = None, theme: str = 'plotly_white',
-                 renderer: str = 'browser', colorscale: str = 'RdBu', showscale: bool = False):
+def plot_heatmap(df: pd.DataFrame, cols: list = None, cols_like: list = None, id_vars: list = None,
+                 out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None,
+                 w: int = None, theme: str = 'plotly_white', renderer: str = 'browser', colorscale: str = 'RdBu',
+                 showscale: bool = False):
     """plot heatmap"""
     # get cols to plot
     if not cols:
-        cols = df._get_numeric_data().columns
+        if cols_like:
+            cols = get_cols_like(df, cols_like)
+        else:
+            cols = df._get_numeric_data().columns
     if not id_vars:
         id_vars = list(df.index.names)
     df = pd.melt(df.reset_index(), id_vars=id_vars, value_vars=cols)

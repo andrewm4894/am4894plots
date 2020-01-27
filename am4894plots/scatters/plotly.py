@@ -4,17 +4,22 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.offline
+from ndpd.utils import get_cols_like
 from plotly.subplots import make_subplots
 
 
-def plot_scatters(df: pd.DataFrame, cols: list = None, x: str = None, title: str = None, out_path: str = None,
-                  show_p: bool = True, return_p: bool = False, h: int = None, w: int = None, marker_size: int = 4,
-                  vertical_spacing: float = 0.1, horizontal_spacing: float = 0.1, theme: str = 'simple_white',
-                  n_cols: int = 3, renderer: str = 'browser', show_axis: bool = False, show_titles: bool = False):
+def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: str = None, title: str = None,
+                  out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None, w: int = None,
+                  marker_size: int = 4, vertical_spacing: float = 0.1, horizontal_spacing: float = 0.1,
+                  theme: str = 'simple_white', n_cols: int = 3, renderer: str = 'browser', show_axis: bool = False,
+                  show_titles: bool = False):
     """Plot scatters with plotly"""
     # get cols to plot
     if not cols:
-        cols = df._get_numeric_data().columns
+        if cols_like:
+            cols = get_cols_like(df, cols_like)
+        else:
+            cols = df._get_numeric_data().columns
     num_plots = len(list(itertools.combinations(cols, 2)))
     n_rows = math.ceil(num_plots / n_cols)
     if show_titles:

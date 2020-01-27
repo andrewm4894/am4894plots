@@ -15,7 +15,7 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
         if cols_like:
             cols = get_cols_like(df, cols_like)
         else:
-        cols = df._get_numeric_data().columns
+            cols = df._get_numeric_data().columns
     # define x axis if needed
     if not x:
         x = df.index

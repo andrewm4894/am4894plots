@@ -3,15 +3,19 @@ import numpy as np
 from bokeh.io import output_file, curdoc, output_notebook
 from bokeh.layouts import gridplot
 from bokeh.plotting import figure, show
+from ndpd.utils import get_cols_like
 
 
 def plot_hists(df: pd.DataFrame, cols: list = None, n_bins: int = 50, n_cols: int = 3, pw: int = 400, ph: int = 400,
               out_path: str = None, return_p: bool = False, notebook: bool = False, p_theme: str = 'light_minimal',
-              show_p: bool = True, density: bool = False):
+              show_p: bool = True, density: bool = False, cols_like: list = None):
     """Plot histograms"""
     # get cols to plot
     if not cols:
-        cols = df._get_numeric_data().columns
+        if cols_like:
+            cols = get_cols_like(df, cols_like)
+        else:
+            cols = df._get_numeric_data().columns
     plots = []
     for i, col in enumerate(cols):
         hist, edges = np.histogram(df[col], density=density, bins=n_bins)
