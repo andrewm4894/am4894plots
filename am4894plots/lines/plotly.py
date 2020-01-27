@@ -1,16 +1,20 @@
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.offline
+from ndpd.utils import get_cols_like
 from plotly.subplots import make_subplots
 
 
-def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, title: str = None, slider: bool = True,
+def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: str = None, title: str = None, slider: bool = True,
                out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None, w: int = None,
                theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser'):
     """Plot lines with plotly"""
     p = go.Figure()
     # get cols to plot
     if not cols:
+        if cols_like:
+            cols = get_cols_like(df, cols_like)
+        else:
         cols = df._get_numeric_data().columns
     # define x axis if needed
     if not x:

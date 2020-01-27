@@ -4,6 +4,7 @@ from bokeh.layouts import gridplot
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import figure, show, output_file
 from bokeh.palettes import Category20
+from ndpd.utils import get_cols_like
 
 
 def make_figure(h: int = 300, w: int = 1200, t_str: str = 'box_zoom,pan,hover,reset,save',
@@ -23,7 +24,7 @@ def add_hover(p, cols: list = None, x_col: str = 'time'):
     hover.formatters = {x_col: "datetime"}
 
 
-def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300, w: int = 1200,
+def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: str = None, h: int = 300, w: int = 1200,
                t_str: str = 'box_zoom,pan,hover,reset,save', x_type: str = 'datetime', show_p: bool = True,
                t_loc: str = 'right', out_path: str = None, return_p: bool = False, palette: str = 'Category20',
                p_theme: str = 'light_minimal', notebook: bool = False):
@@ -31,6 +32,9 @@ def plot_lines(df: pd.DataFrame, cols: list = None, x: str = None, h: int = 300,
     """
     # get cols to plot
     if not cols:
+        if cols_like:
+            cols = get_cols_like(df, cols_like)
+        else:
         cols = df._get_numeric_data().columns
     # define x axis if needed
     if not x:
