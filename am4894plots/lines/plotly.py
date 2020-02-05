@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.offline
@@ -5,11 +7,25 @@ from ndpd.utils import get_cols_like
 from plotly.subplots import make_subplots
 
 
-def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: str = None, title: str = None, slider: bool = True,
-               out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None, w: int = None,
-               theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser'):
+def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: str = None, title: str = None,
+               slider: bool = True, out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None,
+               w: int = None, theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser',
+               stacked: bool = False, filltozero: bool = False):
     """Plot lines with plotly"""
+
+    # set stackedgroup if stacked flag set
+    if stacked:
+        stackgroup = 'one'
+    else:
+        stackgroup = None
+    if filltozero:
+        fill = 'tozeroy'
+    else:
+        fill = None
+
+    # create figure object
     p = go.Figure()
+
     # get cols to plot
     if not cols:
         if cols_like:
@@ -22,7 +38,7 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
     else:
         x = df[x]
     for i, col in enumerate(cols):
-        p.add_trace(go.Scatter(x=x, y=df[col], name=col, line=dict(width=lw)))
+        p.add_trace(go.Scatter(x=x, y=df[col], name=col, line=dict(width=lw), fill=fill, stackgroup=stackgroup))
     if title:
         p.update_layout(title_text=title)
     if slider:
@@ -33,6 +49,9 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
         p.update_layout(width=w)
     p.update_layout(template=theme)
     if out_path:
+        out_dir = '/'.join(out_path.split('/')[0:-1])
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir)
         plotly.offline.plot(p, filename=out_path, auto_open=False)
     if show_p:
         p.show(renderer=renderer)
@@ -66,6 +85,9 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, x: str = None, title: s
         p.update_layout(width=w)
     p.update_layout(template=theme)
     if out_path:
+        out_dir = '/'.join(out_path.split('/')[0:-1])
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir)
         plotly.offline.plot(p, filename=out_path, auto_open=False)
     if show_p:
         p.show(renderer=renderer)
