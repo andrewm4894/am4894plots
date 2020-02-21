@@ -34,7 +34,11 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
             cols = df._get_numeric_data().columns
     # define x axis if needed
     if not x:
-        x = df.index
+        # if looks like int6e then convert to datetime
+        if str(df.index.dtype) == 'int64':
+            x = pd.to_datetime(df.index, unit='s')
+        else:
+            x = df.index
     else:
         x = df[x]
     for i, col in enumerate(cols):
