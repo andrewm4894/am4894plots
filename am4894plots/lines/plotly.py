@@ -10,7 +10,8 @@ from plotly.subplots import make_subplots
 def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: str = None, title: str = None,
                slider: bool = True, out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None,
                w: int = None, theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser',
-               stacked: bool = False, filltozero: bool = False):
+               stacked: bool = False, filltozero: bool = False, shade_regions: list = None,
+               shade_color: str = 'Yellow', shade_opacity: float = 0.2, shade_line_width: int = 0):
     """Plot lines with plotly"""
 
     # set stackedgroup if stacked flag set
@@ -51,7 +52,20 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
         p.update_layout(height=h)
     if w:
         p.update_layout(width=w)
+
+    # add any shaded regions
+    if shade_regions:
+        for x_from, x_to in shade_regions:
+            p.update_layout(
+                shapes=[
+                    dict(
+                        type="rect", xref="x", yref="paper", x0=x_from, y0=0, x1=x_to, y1=1, fillcolor=shade_color,
+                        opacity=shade_opacity, layer="below", line_width=shade_line_width)
+                ]
+            )
+
     p.update_layout(template=theme)
+
     if out_path:
         out_dir = '/'.join(out_path.split('/')[0:-1])
         if not os.path.exists(out_dir):
