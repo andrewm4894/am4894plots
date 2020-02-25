@@ -75,7 +75,7 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
             if x_at >= x.min() and x_at <= x.max():
                 p.add_trace(go.Scatter(
                     x=[x_at], y=[0], mode=marker_mode, text=[str(marker_label)], textposition=marker_position,
-                    marker=dict(marker_symbol=marker_symbol, color=marker_color, size=marker_size), showlegend=False)
+                    marker=dict(symbol=marker_symbol, color=marker_color, size=marker_size), showlegend=False)
                 )
 
     p.update_layout(template=theme)
