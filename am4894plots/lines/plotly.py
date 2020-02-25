@@ -12,7 +12,7 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
                w: int = None, theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser',
                stacked: bool = False, filltozero: bool = False, shade_regions: list = None,
                shade_color: str = 'Yellow', shade_opacity: float = 0.2, shade_line_width: int = 0,
-               marker_list: list = None, marker_mode: str = "text+markers", marker_position: str = "bottom middle",
+               marker_list: list = None, marker_mode: str = "text+markers", marker_position: str = "bottom center",
                marker_color: str = 'Red', marker_size: int = 5):
     """Plot lines with plotly"""
 
@@ -74,7 +74,7 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
             # check if region is in the data to be plotted and only plot if is
             if x_at >= x.min() and x_at <= x.max():
                 p.add_trace(go.Scatter(
-                    x=[x_at], y=[0], mode=marker_mode, text=[marker_label], textposition=marker_position,
+                    x=[x_at], y=[0], mode=marker_mode, text=[str(marker_label)], textposition=marker_position,
                     marker=dict(color=marker_color, size=marker_size), showlegend=False)
                 )
 
