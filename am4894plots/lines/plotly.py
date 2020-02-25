@@ -11,7 +11,9 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
                slider: bool = True, out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None,
                w: int = None, theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser',
                stacked: bool = False, filltozero: bool = False, shade_regions: list = None,
-               shade_color: str = 'Yellow', shade_opacity: float = 0.2, shade_line_width: int = 0):
+               shade_color: str = 'Yellow', shade_opacity: float = 0.2, shade_line_width: int = 0,
+               marker_list: list = None, marker_mode: str = "text+markers", marker_position: str = "bottom middle",
+               marker_color: str = 'Red', marker_size: int = 5):
     """Plot lines with plotly"""
 
     # set stackedgroup if stacked flag set
@@ -55,14 +57,26 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
 
     # add any shaded regions
     if shade_regions:
+        shapes_to_add = []
         for x_from, x_to in shade_regions:
-            p.update_layout(
-                shapes=[
-                    dict(
-                        type="rect", xref="x", yref="paper", x0=x_from, y0=0, x1=x_to, y1=1, fillcolor=shade_color,
+            # check if region is in the data to be plotted and only plot if is
+            if x_from >= x.min() and x_to <= x.max():
+                shapes_to_add.append(
+                    dict(type="rect", xref="x", yref="paper", x0=x_from, y0=0, x1=x_to, y1=1, fillcolor=shade_color,
                         opacity=shade_opacity, layer="below", line_width=shade_line_width)
-                ]
-            )
+                )
+        # now add relevant shapes
+        p.update_layout(shapes=shapes_to_add)
+
+    # add any markers
+    if marker_list:
+        for x_at, marker_label in marker_list:
+            # check if region is in the data to be plotted and only plot if is
+            if x_at >= x.min() and x_at <= x.max():
+                p.add_trace(go.Scatter(
+                    x=[x_at], y=[0], mode=marker_mode, text=[marker_label], textposition=marker_position,
+                    marker=dict(color=marker_color, size=marker_size), showlegend=False)
+                )
 
     p.update_layout(template=theme)
 
