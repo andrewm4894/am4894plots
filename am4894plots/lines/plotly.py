@@ -12,8 +12,8 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
                w: int = None, theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser',
                stacked: bool = False, filltozero: bool = False, shade_regions: list = None,
                shade_color: str = 'Yellow', shade_opacity: float = 0.2, shade_line_width: int = 0,
-               marker_list: list = None, marker_mode: str = "text+markers", marker_position: str = "bottom center",
-               marker_color: str = 'Red', marker_size: int = 5, marker_symbol: str = 'circle'):
+               marker_list: list = None, marker_mode: str = "markers", marker_position: str = "bottom center",
+               marker_color: str = 'Red', marker_size: int = 5, marker_symbol: str = 'circle-open'):
     """Plot lines with plotly"""
 
     # set stackedgroup if stacked flag set
@@ -44,6 +44,7 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
             x = df.index
     else:
         x = df[x]
+
     for i, col in enumerate(cols):
         p.add_trace(go.Scatter(x=x, y=df[col], name=col, line=dict(width=lw), fill=fill, stackgroup=stackgroup))
     if title:
@@ -94,7 +95,10 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
 def plot_lines_grid(df: pd.DataFrame, cols: list = None, x: str = None, title: str = None, slider: bool = False,
                     out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None, w: int = None,
                     vertical_spacing: float = 0.002, theme: str = 'simple_white', lw: int = 1,
-                    renderer: str = 'browser'):
+                    renderer: str = 'browser', shade_regions: list = None, shade_color: str = 'LightGrey',
+                    shade_opacity: float = 0.5, shade_line_width: int = 0, marker_list: list = None,
+                    marker_mode: str = "markers", marker_position: str = "bottom center", marker_color: str = 'Red',
+                    marker_size: int = 5, marker_symbol: str = 'circle-open', h_each: int = None):
     """Plot lines with plotly"""
     # get cols to plot
     if not cols:
@@ -111,11 +115,37 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, x: str = None, title: s
         p.update_layout(title_text=title)
     if slider:
         p.update_layout(xaxis_rangeslider_visible=slider)
+    if h_each:
+        h = len(cols)*h_each
     if h:
         p.update_layout(height=h)
     if w:
         p.update_layout(width=w)
     p.update_layout(template=theme)
+
+    # add any shaded regions
+    if shade_regions:
+        shapes_to_add = []
+        for x_from, x_to in shade_regions:
+            # check if region is in the data to be plotted and only plot if is
+            if x_from >= x.min() and x_to <= x.max():
+                shapes_to_add.append(
+                    dict(type="rect", xref="x", x0=x_from, y0=0, x1=x_to, y1=1, fillcolor=shade_color,
+                         opacity=shade_opacity, layer="below", line_width=shade_line_width, yref='paper')
+                )
+        # now add relevant shapes
+        p.update_layout(shapes=shapes_to_add)
+
+    # add any markers
+    if marker_list:
+        for x_at, marker_label in marker_list:
+            # check if region is in the data to be plotted and only plot if is
+            if x.min() <= x_at <= x.max():
+                p.add_trace(go.Scatter(
+                    x=[x_at], y=[0], mode=marker_mode, text=[str(marker_label)], textposition=marker_position,
+                    marker=dict(symbol=marker_symbol, color=marker_color, size=marker_size), showlegend=False)
+                )
+
     if out_path:
         out_dir = '/'.join(out_path.split('/')[0:-1])
         if not os.path.exists(out_dir):
