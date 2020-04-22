@@ -113,7 +113,10 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
         x = df[x]
     p = make_subplots(rows=len(cols), cols=1, shared_xaxes=True, vertical_spacing=vertical_spacing)
     for i, col in enumerate(cols):
-        p.add_trace(go.Scatter(x=x, y=df[col], name=col, line=dict(width=lw)), row=(1+i), col=1)
+        p.add_trace(go.Scatter(
+            x=x, y=df[col], name=col, line=dict(width=lw, hoverlabel=dict(namelength=-1))),
+            row=(1+i),
+            col=1)
     if title:
         p.update_layout(title_text=title)
     if slider:
