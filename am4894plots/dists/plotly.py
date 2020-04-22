@@ -3,7 +3,7 @@ import pandas as pd
 import plotly
 import math
 
-from ndpd.utils import get_cols_like
+from am4894plots.utils import get_cols_like
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 

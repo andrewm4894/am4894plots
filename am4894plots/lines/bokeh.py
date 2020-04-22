@@ -4,7 +4,7 @@ from bokeh.layouts import gridplot
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import figure, show, output_file
 from bokeh.palettes import Category20
-from ndpd.utils import get_cols_like
+from am4894plots.utils import get_cols_like
 
 
 def make_figure(h: int = 300, w: int = 1200, t_str: str = 'box_zoom,pan,hover,reset,save',

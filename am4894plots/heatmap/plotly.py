@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly
 import plotly.graph_objects as go
-from ndpd.utils import get_cols_like
+from am4894plots.utils import get_cols_like
 
 
 def plot_heatmap(df: pd.DataFrame, cols: list = None, cols_like: list = None, id_vars: list = None,

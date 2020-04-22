@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.offline
-from ndpd.utils import get_cols_like
+from am4894plots.utils import get_cols_like
 from plotly.subplots import make_subplots
 
 
@@ -46,7 +46,12 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
         x = df[x]
 
     for i, col in enumerate(cols):
-        p.add_trace(go.Scatter(x=x, y=df[col], name=col, line=dict(width=lw), fill=fill, stackgroup=stackgroup))
+        p.add_trace(
+            go.Scatter(
+                x=x, y=df[col], name=col, line=dict(width=lw), fill=fill, stackgroup=stackgroup,
+                hoverlabel=dict(namelength=-1)
+            )
+        )
     if title:
         p.update_layout(title_text=title)
     if slider:
@@ -113,10 +118,14 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
         x = df[x]
     p = make_subplots(rows=len(cols), cols=1, shared_xaxes=True, vertical_spacing=vertical_spacing)
     for i, col in enumerate(cols):
-        p.add_trace(go.Scatter(
-            x=x, y=df[col], name=col, line=dict(width=lw, hoverlabel=dict(namelength=-1))),
+        p.add_trace(
+            go.Scatter(
+                x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1)
+            ),
             row=(1+i),
-            col=1)
+            col=1
+        )
+    #p.update_layout(hoverlabel=dict(namelength=-1))
     if title:
         p.update_layout(title_text=title)
     if slider:

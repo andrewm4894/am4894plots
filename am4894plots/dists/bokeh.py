@@ -3,7 +3,7 @@ import numpy as np
 from bokeh.io import output_file, curdoc, output_notebook
 from bokeh.layouts import gridplot
 from bokeh.plotting import figure, show
-from ndpd.utils import get_cols_like
+from am4894plots.utils import get_cols_like
 
 
 def plot_hists(df: pd.DataFrame, cols: list = None, n_bins: int = 50, n_cols: int = 3, pw: int = 400, ph: int = 400,
