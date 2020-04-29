@@ -1,5 +1,7 @@
 import math
 import itertools
+import os
+
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
@@ -55,6 +57,9 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
         p.update_layout(width=w)
     p.update_layout(template=theme)
     if out_path:
+        out_dir = '/'.join(out_path.split('/')[0:-1])
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir)
         plotly.offline.plot(p, filename=out_path, auto_open=False)
     if show_p:
         p.show(renderer=renderer)
