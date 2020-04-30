@@ -70,7 +70,7 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
     # add any shaded regions
     if shade_regions:
         shapes_to_add = []
-        for x_from, x_to in shade_regions:
+        for x_from, x_to, shade_color in shade_regions:
             # check if region is in the data to be plotted and only plot if is
             if x_from >= x.min() and x_to <= x.max():
                 shapes_to_add.append(
