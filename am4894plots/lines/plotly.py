@@ -13,7 +13,8 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
                stacked: bool = False, filltozero: bool = False, shade_regions: list = None,
                shade_color: str = 'Yellow', shade_opacity: float = 0.2, shade_line_width: int = 0,
                marker_list: list = None, marker_mode: str = "markers", marker_position: str = "bottom center",
-               marker_color: str = 'Red', marker_size: int = 5, marker_symbol: str = 'circle-open'):
+               marker_color: str = 'Red', marker_size: int = 5, marker_symbol: str = 'circle-open',
+               normalize_method: str = None):
     """Plot lines with plotly"""
 
     # set stackedgroup if stacked flag set
@@ -35,6 +36,11 @@ def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: s
             cols = get_cols_like(df, cols_like)
         else:
             cols = df._get_numeric_data().columns
+
+    # normalize if specified
+    if normalize_method == 'minmax':
+        df = (df - df.min()) / (df.max() - df.min())
+
     # define x axis if needed
     if not x:
         # if looks like int6e then convert to datetime
