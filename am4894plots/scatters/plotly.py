@@ -14,7 +14,7 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
                   out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None, w: int = None,
                   marker_size: int = 4, vertical_spacing: float = 0.1, horizontal_spacing: float = 0.1,
                   theme: str = 'simple_white', n_cols: int = 3, renderer: str = 'browser', show_axis: bool = False,
-                  show_titles: bool = False):
+                  show_titles: bool = False, normalize_method: str = None):
     """Plot scatters with plotly"""
     # get cols to plot
     if not cols:
@@ -22,6 +22,11 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
             cols = get_cols_like(df, cols_like)
         else:
             cols = df._get_numeric_data().columns
+
+    # normalize if specified
+    if normalize_method == 'minmax':
+        df = (df - df.min()) / (df.max() - df.min())
+
     num_plots = len(list(itertools.combinations(cols, 2)))
     n_rows = math.ceil(num_plots / n_cols)
     if show_titles:
