@@ -64,11 +64,11 @@ def plot_hists(df: pd.DataFrame, cols: list = None, out_path: str = None, show_p
     # make each plot
     for i, col in enumerate(cols):
         if dim:
-            for x in df[dim].unique():
+            for dim_value in df[dim].unique():
                 p.add_trace(
                     go.Histogram(
-                        name=f'{col} - {x}',
-                        x=df[df[dim] == x][col],
+                        name=f'{col} - {dim_value}',
+                        x=df[df[dim] == dim_value][col],
                         cumulative_enabled=cumulative,
                         bingroup=1
                     ),
