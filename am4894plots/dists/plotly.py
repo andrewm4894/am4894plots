@@ -45,7 +45,7 @@ def plot_boxes(df: pd.DataFrame, cols: list = None, out_path: str = None, show_p
 def plot_hists(df: pd.DataFrame, cols: list = None, out_path: str = None, show_p: bool = True, return_p: bool = False,
                h: int = None, w: int = None, spacing: float = 0.05, theme: str = 'simple_white',
                renderer: str = 'browser', n_cols: int = 3, shared_yaxes: bool = True, cols_like: list = None,
-               cumulative: bool = False):
+               cumulative: bool = False, dim: str = None):
     """plot histogram"""
     # get cols to plot
     if not cols:
@@ -63,13 +63,26 @@ def plot_hists(df: pd.DataFrame, cols: list = None, out_path: str = None, show_p
         i += 1
     # make each plot
     for i, col in enumerate(cols):
-        p.add_trace(
-            go.Histogram(
-                name=col, x=df[col], cumulative_enabled=cumulative
-            ),
-            row=axes_dict[i][1]+1,
-            col=axes_dict[i][0]+1
-        )
+        if dim:
+            for x in df[dim].unique():
+                p.add_trace(
+                    go.Histogram(
+                        name=f'{col} - {x}', x=df[df[dim] == x][col], cumulative_enabled=cumulative
+                    ),
+                    row=axes_dict[i][1]+1,
+                    col=axes_dict[i][0]+1
+                )
+            p.update_layout(barmode='overlay')
+            p.update_traces(opacity=0.5)
+        else:
+            p.add_trace(
+                go.Histogram(
+                    name=col, x=df[col], cumulative_enabled=cumulative
+                ),
+                row=axes_dict[i][1] + 1,
+                col=axes_dict[i][0] + 1
+            )
+
     if h:
         p.update_layout(height=h)
     if w:
