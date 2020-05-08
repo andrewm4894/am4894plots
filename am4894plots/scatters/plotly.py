@@ -14,7 +14,7 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
                   out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None, w: int = None,
                   marker_size: int = 4, vertical_spacing: float = 0.1, horizontal_spacing: float = 0.1,
                   theme: str = 'simple_white', n_cols: int = 3, renderer: str = 'browser', show_axis: bool = False,
-                  show_titles: bool = False, normalize_method: str = None):
+                  show_titles: bool = False, normalize_method: str = None, colors: list = None):
     """Plot scatters with plotly"""
     # get cols to plot
     if not cols:
@@ -26,6 +26,9 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
     # normalize if specified
     if normalize_method == 'minmax':
         df = (df - df.min()) / (df.max() - df.min())
+
+    if not colors:
+        colors = [1 for x in range(len(df))]
 
     num_plots = len(list(itertools.combinations(cols, 2)))
     n_rows = math.ceil(num_plots / n_cols)
@@ -47,8 +50,14 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
         y = pair[1]
         i_row = axes_dict[i][1]+1
         i_col = axes_dict[i][0]+1
-        p.add_trace(go.Scatter(x=df[x], y=df[y], name=f'{x} vs {y}', mode='markers', marker=dict(size=marker_size)),
-                    row=i_row, col=i_col)
+        p.add_trace(go.Scatter(
+            x=df[x], y=df[y], name=f'{x} vs {y}', mode='markers',
+            marker=dict(
+                size=marker_size,
+                color=colors
+            )),
+            row=i_row, col=i_col
+        )
         p.update_xaxes(title_text=x, row=i_row, col=i_col, title_standoff=0,
                        showline=show_axis, linewidth=1, linecolor='grey', showticklabels=show_axis, ticks='')
         p.update_yaxes(title_text=y, row=i_row, col=i_col, title_standoff=0,
