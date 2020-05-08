@@ -67,7 +67,10 @@ def plot_hists(df: pd.DataFrame, cols: list = None, out_path: str = None, show_p
             for x in df[dim].unique():
                 p.add_trace(
                     go.Histogram(
-                        name=f'{col} - {x}', x=df[df[dim] == x][col], cumulative_enabled=cumulative
+                        name=f'{col} - {x}',
+                        x=df[df[dim] == x][col],
+                        cumulative_enabled=cumulative,
+                        bingroup=1
                     ),
                     row=axes_dict[i][1]+1,
                     col=axes_dict[i][0]+1
