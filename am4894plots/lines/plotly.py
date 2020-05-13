@@ -109,7 +109,8 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
                     lw: int = 1, renderer: str = 'browser', shade_regions: list = None, shade_color: str = 'LightGrey',
                     shade_opacity: float = 0.5, shade_line_width: int = 0, marker_list: list = None,
                     marker_mode: str = "markers", marker_position: str = "bottom center", marker_color: str = 'Red',
-                    marker_size: int = 5, marker_symbol: str = 'circle-open', h_each: int = None):
+                    marker_size: int = 5, marker_symbol: str = 'circle-open', h_each: int = None, legend: bool = True,
+                    yaxes_visible: bool = True):
     """Plot lines with plotly"""
     # get cols to plot
     if not cols:
@@ -126,7 +127,8 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
     for i, col in enumerate(cols):
         p.add_trace(
             go.Scatter(
-                x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1)
+                x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1),
+                mode="lines+text", text=[col], textposition="bottom left"
             ),
             row=(1+i),
             col=1
@@ -166,7 +168,14 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
                     x=[x_at], y=[0], mode=marker_mode, text=[str(marker_label)], textposition=marker_position,
                     marker=dict(symbol=marker_symbol, color=marker_color, size=marker_size), showlegend=False)
                 )
+                #p.update_layout(yaxis={'visible': False})
 
+
+    # some other options
+    p.update_layout(showlegend=legend)
+    p.update_yaxes(visible=yaxes_visible)
+
+    # save file
     if out_path:
         out_dir = '/'.join(out_path.split('/')[0:-1])
         if not os.path.exists(out_dir):

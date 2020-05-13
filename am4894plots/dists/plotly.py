@@ -70,7 +70,8 @@ def plot_hists(df: pd.DataFrame, cols: list = None, out_path: str = None, show_p
                         name=f'{col} - {dim_value}',
                         x=df[df[dim] == dim_value][col],
                         cumulative_enabled=cumulative,
-                        bingroup=1
+                        bingroup=1,
+                        histnorm='probability density'
                     ),
                     row=axes_dict[i][1]+1,
                     col=axes_dict[i][0]+1
