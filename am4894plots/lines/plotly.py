@@ -114,25 +114,27 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
                     xaxes_visible: bool = True, subplot_titles: list = None, subplot_titles_size: int = 12,
                     subplot_titles_x: float = 0.1, subplot_titles_color: str = 'grey'):
     """Plot lines with plotly"""
+
     # get cols to plot
     if not cols:
         if cols_like:
             cols = get_cols_like(df, cols_like)
         else:
             cols = df._get_numeric_data().columns
+
     # define x axis if needed
     if not x:
         x = df.index
     else:
         x = df[x]
 
+    # define subplot titles if needed
     if not subplot_titles:
         subplot_titles = cols
 
     # make subplots
     p = make_subplots(
-        rows=len(cols), cols=1, shared_xaxes=True, vertical_spacing=vertical_spacing,
-        subplot_titles=subplot_titles
+        rows=len(cols), cols=1, shared_xaxes=True, vertical_spacing=vertical_spacing, subplot_titles=subplot_titles
     )
 
     # update subplot titles
@@ -140,20 +142,18 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
         annotation['x'] = subplot_titles_x
         annotation['font'] = {'size': subplot_titles_size, 'color': subplot_titles_color}
 
+    # add lines
     for i, col in enumerate(cols):
-        #if col_labels:
-        #    col_label = col_labels[i]
-        #else:
-        #    col_label = col
         p.add_trace(
             go.Scatter(
-                x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1),
-                #mode="lines+text", text=[col_label], textposition=text_position
+                x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1)
             ),
             row=(1+i),
             col=1
         )
+
     #p.update_layout(hoverlabel=dict(namelength=-1))
+
     if title:
         p.update_layout(title_text=title)
     if slider:
@@ -188,8 +188,6 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
                     x=[x_at], y=[0], mode=marker_mode, text=[str(marker_label)], textposition=marker_position,
                     marker=dict(symbol=marker_symbol, color=marker_color, size=marker_size), showlegend=False)
                 )
-                #p.update_layout(yaxis={'visible': False})
-
 
     # some other options
     p.update_layout(showlegend=legend)
@@ -202,7 +200,9 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
         if not os.path.exists(out_dir):
             os.makedirs(out_dir)
         plotly.offline.plot(p, filename=out_path, auto_open=False)
+
     if show_p:
         p.show(renderer=renderer)
+
     if return_p:
         return p
