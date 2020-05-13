@@ -110,7 +110,9 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
                     shade_opacity: float = 0.5, shade_line_width: int = 0, marker_list: list = None,
                     marker_mode: str = "markers", marker_position: str = "bottom center", marker_color: str = 'Red',
                     marker_size: int = 5, marker_symbol: str = 'circle-open', h_each: int = None, legend: bool = True,
-                    yaxes_visible: bool = True):
+                    yaxes_visible: bool = True, col_labels: list = None, text_position: str = "bottom left",
+                    xaxes_visible: bool = True, subplot_titles: list = None, subplot_titles_size: int = 12,
+                    subplot_titles_x: float = 0.1, subplot_titles_color: str = 'grey'):
     """Plot lines with plotly"""
     # get cols to plot
     if not cols:
@@ -123,12 +125,30 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
         x = df.index
     else:
         x = df[x]
-    p = make_subplots(rows=len(cols), cols=1, shared_xaxes=True, vertical_spacing=vertical_spacing)
+
+    if not subplot_titles:
+        subplot_titles = cols
+
+    # make subplots
+    p = make_subplots(
+        rows=len(cols), cols=1, shared_xaxes=True, vertical_spacing=vertical_spacing,
+        subplot_titles=subplot_titles
+    )
+
+    # update subplot titles
+    for annotation in p['layout']['annotations']:
+        annotation['x'] = subplot_titles_x
+        annotation['font'] = {'size': subplot_titles_size, 'color': subplot_titles_color}
+
     for i, col in enumerate(cols):
+        #if col_labels:
+        #    col_label = col_labels[i]
+        #else:
+        #    col_label = col
         p.add_trace(
             go.Scatter(
                 x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1),
-                mode="lines+text", text=[col], textposition="bottom left"
+                #mode="lines+text", text=[col_label], textposition=text_position
             ),
             row=(1+i),
             col=1
@@ -174,6 +194,7 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
     # some other options
     p.update_layout(showlegend=legend)
     p.update_yaxes(visible=yaxes_visible)
+    p.update_xaxes(visible=xaxes_visible)
 
     # save file
     if out_path:
