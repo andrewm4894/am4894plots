@@ -112,7 +112,7 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
                     marker_size: int = 5, marker_symbol: str = 'circle-open', h_each: int = None, legend: bool = True,
                     yaxes_visible: bool = True, col_labels: list = None, text_position: str = "bottom left",
                     xaxes_visible: bool = True, subplot_titles: list = None, subplot_titles_size: int = 12,
-                    subplot_titles_x: float = 0.1, subplot_titles_color: str = 'grey'):
+                    subplot_titles_x: float = 0.2, subplot_titles_color: str = 'grey'):
     """Plot lines with plotly"""
 
     # get cols to plot
@@ -144,13 +144,23 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
 
     # add lines
     for i, col in enumerate(cols):
-        p.add_trace(
-            go.Scatter(
-                x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1)
-            ),
-            row=(1+i),
-            col=1
-        )
+        if isinstance(col, list):
+            for c in col:
+                p.add_trace(
+                    go.Scatter(
+                        x=x, y=df[c], name=c, line=dict(width=lw), hoverlabel=dict(namelength=-1)
+                    ),
+                    row=(1 + i),
+                    col=1
+                )
+        else:
+            p.add_trace(
+                go.Scatter(
+                    x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1)
+                ),
+                row=(1+i),
+                col=1
+            )
 
     #p.update_layout(hoverlabel=dict(namelength=-1))
 
