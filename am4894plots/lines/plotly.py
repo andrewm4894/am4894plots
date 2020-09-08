@@ -7,6 +7,12 @@ from am4894plots.utils import get_cols_like
 from plotly.subplots import make_subplots
 
 
+def normalize_col(col, normalize_method: str = 'minmax'):
+    if normalize_method == 'minmax':
+        col = (col - col.min()) / (col.max() - col.min())
+    return col
+
+
 def plot_lines(df: pd.DataFrame, cols: list = None, cols_like: list = None, x: str = None, title: str = None,
                slider: bool = True, out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None,
                w: int = None, theme: str = 'simple_white', lw: int = 1, renderer: str = 'browser',
@@ -111,7 +117,8 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
                     marker_position: str = "bottom center", marker_color: str = 'Red', marker_size: int = 5,
                     marker_symbol: str = 'circle-open', h_each: int = None, legend: bool = True,
                     yaxes_visible: bool = True, xaxes_visible: bool = True, subplot_titles: list = None,
-                    subplot_titles_size: int = 12, subplot_titles_x: float = 0.2, subplot_titles_color: str = 'grey'):
+                    subplot_titles_size: int = 12, subplot_titles_x: float = 0.2, subplot_titles_color: str = 'grey',
+                    normalize_method: str = None):
     """Plot lines with plotly"""
 
     # get cols to plot
@@ -145,17 +152,19 @@ def plot_lines_grid(df: pd.DataFrame, cols: list = None, cols_like: list = None,
     for i, col in enumerate(cols):
         if isinstance(col, list):
             for c in col:
+                col_data = normalize_col(df[c], normalize_method)
                 p.add_trace(
                     go.Scatter(
-                        x=x, y=df[c], name=c, line=dict(width=lw), hoverlabel=dict(namelength=-1)
+                        x=x, y=col_data, name=c, line=dict(width=lw), hoverlabel=dict(namelength=-1)
                     ),
                     row=(1 + i),
                     col=1
                 )
         else:
+            col_data = normalize_col(df[col], normalize_method)
             p.add_trace(
                 go.Scatter(
-                    x=x, y=df[col], name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1)
+                    x=x, y=col_data, name=col, line=dict(width=lw), hoverlabel=dict(namelength=-1)
                 ),
                 row=(1+i),
                 col=1

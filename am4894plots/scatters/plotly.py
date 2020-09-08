@@ -14,7 +14,7 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
                   out_path: str = None, show_p: bool = True, return_p: bool = False, h: int = None, w: int = None,
                   marker_size: int = 4, vertical_spacing: float = 0.1, horizontal_spacing: float = 0.1,
                   theme: str = 'simple_white', n_cols: int = 3, renderer: str = 'browser', show_axis: bool = False,
-                  show_titles: bool = False, normalize_method: str = None, colors: list = None):
+                  show_titles: bool = False, normalize_method: str = None, colors: list = None, labels: list = None):
     """Plot scatters with plotly"""
     # get cols to plot
     if not cols:
@@ -52,6 +52,7 @@ def plot_scatters(df: pd.DataFrame, cols: list = None, cols_like: list = None, x
         i_col = axes_dict[i][0]+1
         p.add_trace(go.Scatter(
             x=df[x], y=df[y], name=f'{x} vs {y}', mode='markers',
+            text=labels, textposition="top center",
             marker=dict(
                 size=marker_size,
                 color=colors
