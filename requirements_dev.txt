@@ -8,13 +8,13 @@ watchdog==0.9.0
 flake8==3.7.9
 tox==3.14.1
 coverage==4.5.4
-Sphinx==2.2.1
-twine==3.1.0
+Sphinx==3.2.1
+twine==3.2.0
 sphinx-rtd-theme==0.4.3
 jupyter==1.0.0
 seaborn==0.9.0
 ffmpeg-python==0.2.0
-codecov==2.0.15
+codecov==2.1.9
 
 pytest==5.3.1
 pytest-runner==5.2
